@@ -7,7 +7,7 @@
 |![image](image/H4.svg)Three-objective problems, parameter H=4|![image](image/H5.svg)Three-objective problems, parameter H=5|![image](image/H6.svg)Three-objective problems, parameter H=6|
 
 ## How to use
-You can easily use this weight vector set by reading the data.  
+You can easily use this weight vector set by reading the [data](data).  
 If the data you want isn't there, you can use [ILD.m](ILD/ILD.m) to create the data you need.  
 
 If you want to use this weight vector set in [PlatEMO](https://github.com/BIMK/PlatEMO/), you can take two methods.  
