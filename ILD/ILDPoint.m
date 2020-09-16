@@ -14,9 +14,8 @@ function [W,N] = ILDPoint(N,M)
 
 %------------------------------- Reference --------------------------------
 % T. Takagi, K. Takadama, H. Sato, Incremental lattice design of weight
-% vector set, Workshop on Decomposition Techniques in Evolutionary
-% Optimization, 2020 Genetic and Evolutionary Computation Conference
-% (GECCO 2020), 2020. (to appear)
+% vector set, Proceedings of the 2020 Genetic and Evolutionary Computation
+% Conference Companion, 2020, 1486-1494.
 %------------------------------- Copyright --------------------------------
 % Copyright (c) 2018-2019 BIMK Group. You are free to use the PlatEMO for
 % research purposes. All publications which use this platform or any code

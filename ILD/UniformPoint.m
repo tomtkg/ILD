@@ -21,9 +21,8 @@ function [W,N] = UniformPoint(N,M)
 % part I: Solving problems with box constraints, IEEE Transactions on
 % Evolutionary Computation, 2014, 18(4): 577-601.
 % [3] T. Takagi, K. Takadama, H. Sato, Incremental lattice design of weight
-% vector set, Workshop on Decomposition Techniques in Evolutionary
-% Optimization, 2020 Genetic and Evolutionary Computation Conference
-% (GECCO 2020), 2020. (to appear)
+% vector set, Proceedings of the 2020 Genetic and Evolutionary Computation
+% Conference Companion, 2020, 1486-1494.
 %------------------------------- Copyright --------------------------------
 % Copyright (c) 2018-2019 BIMK Group. You are free to use the PlatEMO for
 % research purposes. All publications which use this platform or any code
@@ -35,9 +34,8 @@ function [W,N] = UniformPoint(N,M)
 
 % This algorithm is written by Tomoaki Takagi
 
-    W = ILDPoint(N,M);
-    if W ~= zeros(1,M)
-        N = size(W,1);
+    [W,N] = ILDPoint(N,M);
+    if size(W,1) ~= 1
         return
     end
     
