@@ -16,4 +16,4 @@ For example, change UniformPoint(Global.N,Global.M) to ILDPoint(Global.N,Global.
 The other one simply replaces "/PlatEMO-master/PlatEMO/Public/UniformPoint.m" with [UniformPoint.m](ILD/UniformPoint.m).
 
 ## Reference 
-Tomoaki Takagi, Keiki Takadama, and Hiroyuki Sato: **Incremental Lattice Design of Weight Vector Set**,  Proc. of ACM Genetic and Evolutionary Computation Conference (GECCO 2020), pp. 1486--1494, 2020. [DOI](https://doi.org/10.1145/3377929.3398082){:target="_blank"}
+Tomoaki Takagi, Keiki Takadama, and Hiroyuki Sato, **Incremental Lattice Design of Weight Vector Set**, Proceedings of the 2020 Genetic and Evolutionary Computation Conference Companion, 2020, 1486-1494.
