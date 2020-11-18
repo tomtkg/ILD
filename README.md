@@ -1,5 +1,5 @@
 # Incremental Lattice Design
- Incremental lattice desigin  of Weight Vector Set
+ Incremental Lattice Design  of Weight Vector Set
 
 ## Sample image of weight vector set
 |![image](image/H1.svg)Three-objective problems, parameter H=1|![image](image/H2.svg)Three-objective problems, parameter H=2|![image](image/H3.svg)Three-objective  problems, parameter H=3
@@ -16,4 +16,4 @@ For example, change UniformPoint(Global.N,Global.M) to ILDPoint(Global.N,Global.
 The other one simply replaces "/PlatEMO-master/PlatEMO/Public/UniformPoint.m" with [UniformPoint.m](ILD/UniformPoint.m).
 
 ## Reference 
-Tomoaki Takagi, Keiki Takadama, and Hiroyuki Sato, **Incremental Lattice Design of Weight Vector Set**, Proceedings of the 2020 Genetic and Evolutionary Computation Conference Companion, 2020, 1486-1494.
+Tomoaki Takagi, Keiki Takadama, and Hiroyuki Sato, **Incremental Lattice Design of Weight Vector Set**, Proceedings of the 2020 Genetic and Evolutionary Computation Conference Companion, pp. 1486-1494, 2020.
