@@ -10,7 +10,7 @@ function [W,N] = ILDPoint(N,M)
 %   larger than the predefined size N.
 %
 %   Example:
-%       [W,N] = ILD(286,10)
+%       [W,N] = ILDPoint(286,10)
 
 %------------------------------- Reference --------------------------------
 % T. Takagi, K. Takadama, H. Sato, Incremental lattice design of weight

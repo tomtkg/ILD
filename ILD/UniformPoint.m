@@ -27,6 +27,7 @@ function [W,N] = UniformPoint(N,M,method)
 %
 %   Example:
 %       [W,N] = UniformPoint(275,10)
+%       [W,N] = UniformPoint(286,10,'ILD')
 %       [W,N] = UniformPoint(102,10,'MUD')
 %       [W,N] = UniformPoint(1000,3,'grid')
 %       [W,N] = UniformPoint(103,10,'Latin')
