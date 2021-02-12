@@ -1,30 +1,46 @@
-function [W,N] = UniformPoint(N,M)
-%UniformPoint - Generate a set of uniformly distributed points on the unit
-%hyperplane.
+function [W,N] = UniformPoint(N,M,method)
+%UniformPoint - Generate a set of uniformly distributed points.
 %
-%   [W,N] = UniformPoint(N,M) returns approximately N uniformly distributed
-%   points with M objectives on the unit hyperplane.
+%   [W,L] = UniformPoint(N,M) returns approximately N uniformly distributed
+%   points with M objectives on the unit hyperplane via the normal-boundary
+%   intersection method with two layers. Note that the number of sampled
+%   points L may be slightly smaller than the predefined size N due to the
+%   need for uniformity.
 %
-%   Due to the requirement of uniform distribution, the number of points
-%   cannot be arbitrary, and the number of points in W may be slightly
-%   smaller than the predefined size N.
+%   [W,L] = UniformPoint(N,M,'ILD') returns approximately N uniformly
+%   distributed points with M objectives on the unit hyperplane. Note that
+%   the number of sampled points L may be slightly larger than the
+%   predefined size N due to the need for uniformity.
+%
+%   W = UniformPoint(N,M,'MUD') returns exactly N uniformly distributed
+%   points with M objectives on the unit hyperplane via the mixture uniform
+%   design method.
+%
+%   [W,L] = UniformPoint(N,M,'grid') returns approximately N uniformly
+%   distributed points with M objectives in the unit hypercube via the grid
+%   sampling. Note that the number of sampled points L may be slighly
+%   larger than the predefined size N due to the need for uniformity.
+%
+%   W = UniformPoint(N,M,'Latin') returns exactly N randomly distributed
+%   points with M objectives in the unit hypercube via the Latin hypercube
+%   sampling method.
 %
 %   Example:
 %       [W,N] = UniformPoint(275,10)
+%       [W,N] = UniformPoint(102,10,'MUD')
+%       [W,N] = UniformPoint(1000,3,'grid')
+%       [W,N] = UniformPoint(103,10,'Latin')
 
 %------------------------------- Reference --------------------------------
-% [1] I. Das and J. E. Dennis, Normal-boundary intersection: A new method
-% for generating the Pareto surface in nonlinear multicriteria optimization
-% problems, SIAM Journal on Optimization, 1998, 8(3): 631-657.
-% [2] K. Deb and H. Jain, An evolutionary many-objective optimization
-% algorithm using reference-point based non-dominated sorting approach,
-% part I: Solving problems with box constraints, IEEE Transactions on
-% Evolutionary Computation, 2014, 18(4): 577-601.
-% [3] T. Takagi, K. Takadama, H. Sato, Incremental lattice design of weight
+% [1] Y. Tian, X. Xiang, X. Zhang, R. Cheng, and Y. Jin, Sampling reference
+% points on the Pareto fronts of benchmark multi-objective optimization
+% problems, Proceedings of the 2018 IEEE Congress on Evolutionary
+% Computation, 2018.
+% [2] T. Takagi, K. Takadama, H. Sato, Incremental lattice design of weight
 % vector set, Proceedings of the 2020 Genetic and Evolutionary Computation
 % Conference Companion, 2020, 1486-1494.
 %------------------------------- Copyright --------------------------------
-% Copyright (c) 2018-2019 BIMK Group. You are free to use the PlatEMO for
+% Copyright (c) 2021 BIMK Group. You are free to use the PlatEMO for
 % research purposes. All publications which use this platform or any code
 % in the platform should acknowledge the use of "PlatEMO" and reference "Ye
 % Tian, Ran Cheng, Xingyi Zhang, and Yaochu Jin, PlatEMO: A MATLAB platform
@@ -32,13 +48,13 @@ function [W,N] = UniformPoint(N,M)
 % Computational Intelligence Magazine, 2017, 12(4): 73-87".
 %--------------------------------------------------------------------------
 
-% This algorithm is written by Tomoaki Takagi
-
-    [W,N] = ILDPoint(N,M);
-    if size(W,1) ~= 1
-        return
+    if nargin < 3
+        method = 'NBI';
     end
-    
+    [W,N] = feval(method,N,M);
+end
+
+function [W,N] = NBI(N,M)
     H1 = 1;
     while nchoosek(H1+M,M-1) <= N
         H1 = H1 + 1;
@@ -60,52 +76,75 @@ function [W,N] = UniformPoint(N,M)
     N = size(W,1);
 end
 
-%% If the the predefined size N and the possible size of the ILD
-%% point match, the ILD point is returned.
-function [W,N] = ILDPoint(N,M)
-
-    NList = [
-         5,15, 35,  69, 121, 195,  295,  425,  589;
-         6,21, 56, 126, 251, 456,  771, 1231, 1876;
-         7,28, 84, 210, 462, 923, 1709, 2975, 4921;
-         8,36,120, 330, 792,1716, 3431, 6427,11404;
-		 9,45,165, 495,1287,3003, 6435,12869,24301;
-        10,55,220, 715,2002,5005,11440,24310,48619;
-        11,66,286,1001,3003,8008,19448,43758,92378;];
-    
-    H = 1;
+function [W,N] = ILD(N,M)
+    I = M * eye(M);
     W = zeros(1,M);
-    
-    if M==2
-        return
-    elseif M==3
-        while (H+1)*(H+2)/2*M+1 <= N
-            H = H + 1;
-        end
-        if H*(H+1)/2*M+1 ~= N
-            return
-        end
-    else
-        while NList(M-3,H+1) <= N
-            H = H + 1;
-        end
-        if NList(M-3,H) ~= N
-            return
-        end
-    end
-    
     edgeW = W;
-    for i = 1 : H
-        sizeW = size(edgeW,1);
-        edgeW = repmat(edgeW,M,1);
-        for j = 1 : M
-            edgeW((j-1)*sizeW+1:j*sizeW,j) = edgeW((j-1)*sizeW+1:j*sizeW,j)+M;
-        end
+    while size(W) < N
+        edgeW = repmat(edgeW,M,1) + repelem(I,size(edgeW,1),1);
         edgeW = unique(edgeW,'rows');
         edgeW(min(edgeW,[],2)~=0,:) = [];
         W = [W+1;edgeW];
     end
-    W = W / (M*H);
+    W = W./sum(W,2);
     W = max(W,1e-6);
     N = size(W,1);
+end
+
+function [W,N] = MUD(N,M)
+    X = GoodLatticePoint(N,M-1).^(1./repmat(M-1:-1:1,N,1));
+    W = zeros(N,M);
+    W(:,1:end-1) = (1-X).*cumprod(X,2)./X;
+    W(:,end)     = prod(X,2);
+end
+
+function [W,N] = grid(N,M)
+    gap = linspace(0,1,ceil(N^(1/M)));
+    eval(sprintf('[%s]=ndgrid(gap);',sprintf('c%d,',1:M)))
+    eval(sprintf('W=[%s];',sprintf('c%d(:),',1:M)))
+    N = size(W,1);
+end
+
+function [W,N] = Latin(N,M)
+    [~,W] = sort(rand(N,M),1);
+    W = (rand(N,M)+W-1)/N;
+end
+
+function Data = GoodLatticePoint(N,M)
+    hm           = find(gcd(1:N,N)==1);
+    udt          = mod((1:N)'*hm,N); 
+    udt(udt==0)  = N;
+    nCombination = nchoosek(length(hm),M);
+    if nCombination < 1e4
+        Combination = nchoosek(1:length(hm),M);
+        CD2 = zeros(nCombination,1);
+        for i = 1 : nCombination
+            UT     = udt(:,Combination(i,:));
+            CD2(i) = CalCD2(UT);
+        end
+        [~,minIndex] = min(CD2);
+        Data = udt(:,Combination(minIndex,:));
+    else
+        CD2 = zeros(N,1);
+        for i = 1 : N
+            UT     = mod((1:N)'*i.^(0:M-1),N);
+            CD2(i) = CalCD2(UT);
+        end
+        [~,minIndex] = min(CD2);
+        Data = mod((1:N)'*minIndex.^(0:M-1),N);
+        Data(Data==0) = N;
+    end
+    Data = (Data-1)/(N-1);
+end
+
+function CD2 = CalCD2(UT)
+    [N,S] = size(UT);
+    X     = (2*UT-1)/(2*N);
+    CS1 = sum(prod(2+abs(X-1/2)-(X-1/2).^2,2));
+    CS2 = zeros(N,1);
+    for i = 1 : N    
+        CS2(i) = sum(prod((1+1/2*abs(repmat(X(i,:),N,1)-1/2)+1/2*abs(X-1/2)-1/2*abs(repmat(X(i,:),N,1)-X)),2));
+    end
+    CS2 = sum(CS2);
+    CD2 = (13/12)^S-2^(1-S)/N*CS1+1/(N^2)*CS2;
 end

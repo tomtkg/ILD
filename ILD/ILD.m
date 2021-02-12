@@ -28,14 +28,11 @@ function ILD(H,M)
 % This algorithm is written by Tomoaki Takagi
 % An optimized implementation for MATLAB
     
+    I = M * eye(M);
     W = zeros(1,M);
     edgeW = W;
     for i = 1 : H
-        sizeW = size(edgeW,1);
-        edgeW = repmat(edgeW,M,1);
-        for j = 1 : M
-            edgeW((j-1)*sizeW+1:j*sizeW,j) = edgeW((j-1)*sizeW+1:j*sizeW,j)+M;
-        end
+        edgeW = repmat(edgeW,M,1) + repelem(I,size(edgeW,1),1);
         edgeW = unique(edgeW,'rows');
         edgeW(min(edgeW,[],2)~=0,:) = [];
         W = [W+1;edgeW];
