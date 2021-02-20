@@ -10,10 +10,7 @@
 You can easily use this weight vector set by reading the [data](data).  
 If the data you want isn't there, you can use [ILD.m](ILD/ILD.m) to create the data you need.  
 
-If you want to use this weight vector set in [PlatEMO](https://github.com/BIMK/PlatEMO), you can take two methods.  
-One is to add [ILDPoint.m](ILD/ILDPoint.m) in "/PlatEMO-master/PlatEMO/Algorithms/Utility functions" and call it from the algorithm.  
-For example, change UniformPoint(Global.N,Global.M) to ILDPoint(Global.N,Global.M).  
-The other one replaces "/PlatEMO-master/PlatEMO/Algorithms/Utility functions/UniformPoint.m" with [UniformPoint.m](ILD/UniformPoint.m) and change UniformPoint(Global.N,Global.M) to UniformPoint(Global.N,Global.M, 'ILD').
+If you want to use this weight vector set in [PlatEMO](https://github.com/BIMK/PlatEMO), you can use ["PlatEMO/Algorithms/Utility functions/UniformPoint.m"](https://github.com/BIMK/PlatEMO/blob/master/PlatEMO/Algorithms/Utility%20functions/UniformPoint.m) as in [W,N] = UniformPoint(286,10,'ILD').
 
 ## Reference 
 Tomoaki Takagi, Keiki Takadama, and Hiroyuki Sato, **Incremental Lattice Design of Weight Vector Set**, Proceedings of the 2020 Genetic and Evolutionary Computation Conference Companion, pp. 1486-1494, 2020.

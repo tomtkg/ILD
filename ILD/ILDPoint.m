@@ -1,28 +1,20 @@
-function [W,N] = ILDPoint(N,M)
+function [W,L] = ILDPoint(N,M)
 %ILD - Generate a set of uniformly distributed points on the unit
-%hyperplane named Incremental lattice desigin
+%hyperplane named Incremental lattice desigin.
 %
-%   ILDPoint(N,M) returns approximately N uniformly distributed
+%   [W,L] = ILDPoint(N,M) returns approximately N uniformly distributed
 %   points with M objectives on the unit hyperplane.
 %
-%   Due to the requirement of uniform distribution, the number of points
-%   cannot be arbitrary, and the number of points in W may be slightly
-%   larger than the predefined size N.
+%   Note that the number of sampled points L may be slightly larger than
+%   the predefined size N due to the need for uniformity.
 %
 %   Example:
-%       [W,N] = ILDPoint(286,10)
+%       [W,L] = ILDPoint(286,10)
 
 %------------------------------- Reference --------------------------------
-% T. Takagi, K. Takadama, H. Sato, Incremental lattice design of weight
+% T. Takagi, K. Takadama, and H. Sato, Incremental lattice design of weight
 % vector set, Proceedings of the 2020 Genetic and Evolutionary Computation
 % Conference Companion, 2020, 1486-1494.
-%------------------------------- Copyright --------------------------------
-% Copyright (c) 2018-2019 BIMK Group. You are free to use the PlatEMO for
-% research purposes. All publications which use this platform or any code
-% in the platform should acknowledge the use of "PlatEMO" and reference "Ye
-% Tian, Ran Cheng, Xingyi Zhang, and Yaochu Jin, PlatEMO: A MATLAB platform
-% for evolutionary multi-objective optimization [educational forum], IEEE
-% Computational Intelligence Magazine, 2017, 12(4): 73-87".
 %--------------------------------------------------------------------------
 
 % This algorithm is written by Tomoaki Takagi
