@@ -14,5 +14,7 @@ If the data you want isn't there, you can use [ILD.m](ILD/ILD.m) to create the d
 
 If you want to use this weight vector set in [PlatEMO](https://github.com/BIMK/PlatEMO), you can use ["PlatEMO/Algorithms/Utility functions/UniformPoint.m"](https://github.com/BIMK/PlatEMO/blob/master/PlatEMO/Algorithms/Utility%20functions/UniformPoint.m) like `[W,N] = UniformPoint(286,10,'ILD')`.
 
+Also, you can easily use this in python. Like 'python ILD\ILD.py 3 3'
+
 ## Reference 
 Tomoaki Takagi, Keiki Takadama, and Hiroyuki Sato, **Incremental Lattice Design of Weight Vector Set**, Proc. of the 2020 Genetic and Evolutionary Computation Conference (GECCO2020), pp. 1486-1494, 2020. [DOI](https://doi.org/10.1145/3377929.3398082).
