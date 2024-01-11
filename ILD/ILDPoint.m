@@ -1,4 +1,4 @@
-function [W,L] = ILDPoint(N,M)
+function [W,N] = ILDPoint(N,M)
 %ILD - Generate a set of uniformly distributed points on the unit
 %hyperplane named Incremental lattice desigin.
 %
@@ -22,13 +22,13 @@ function [W,L] = ILDPoint(N,M)
     I = M * eye(M);
     W = zeros(1,M);
     edgeW = W;
-    for i = 1 : H
+    while size(W) < N
         edgeW = repmat(edgeW,M,1) + repelem(I,size(edgeW,1),1);
         edgeW = unique(edgeW,'rows');
         edgeW(min(edgeW,[],2)~=0,:) = [];
         W = [W+1;edgeW];
     end
-    W = W / (M*H);
+    W = W./sum(W,2);
     W = max(W,1e-6);
     N = size(W,1);
 end
